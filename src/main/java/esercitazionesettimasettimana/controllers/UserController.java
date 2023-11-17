@@ -52,8 +52,14 @@ public class UserController {
         userService.delete(currentUser.getId());
     }
 
-    @PatchMapping("/me")
+    @PatchMapping("/me/bookEvent")
     public void bookEvent(@AuthenticationPrincipal User currentUser, @RequestBody BookEventDTO body) {
         userService.bookEvent(currentUser.getId(), body.id());
+    }
+
+    @PatchMapping("/me/cancelReservation")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void cancelReservation(@AuthenticationPrincipal User currentUser, @RequestBody BookEventDTO body) {
+        userService.cancelReservation(currentUser.getId(), body.id());
     }
 }

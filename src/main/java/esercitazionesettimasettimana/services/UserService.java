@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -46,6 +47,13 @@ public class UserService {
         User user = this.getById(id);
         Event event = eventService.getById(eventId);
         user.setEvents(Set.of(event));
+        userRepository.save(user);
         return new BookEventSuccessDTO(user, event);
+    }
+
+    public void cancelReservation(UUID eventId, UUID id) {
+        User user = this.getById(id);
+        user.setEvents((user.getEvents().stream().filter(event -> event.getId() != eventId)).collect(Collectors.toSet()));
+        userRepository.save(user);
     }
 }
