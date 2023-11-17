@@ -36,6 +36,11 @@ public class EventService {
         return eventRepository.findByDateAfter(LocalDate.now(), pageable);
     }
 
+    public Page<Event> getOrganizedEvents(User organizer, int page, int size, String orderBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
+        return eventRepository.findByEventOrganizer(organizer, pageable);
+    }
+
     public Page<Event> getAllEvents(int page, int size, String orderBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
         return eventRepository.findAll(pageable);
