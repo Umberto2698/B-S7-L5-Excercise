@@ -1,9 +1,7 @@
 package esercitazionesettimasettimana.enteties;
 
 import com.github.javafaker.Faker;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,10 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @NoArgsConstructor
@@ -30,6 +25,10 @@ public class Event {
     private String site;
     @Column(name = "n_of_seats")
     private int numberOfSeats;
+
+    @ManyToMany(cascade = CascadeType.REMOVE)
+    @JoinTable(name = "Event_Participants", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "event_id")})
+    private Set<User> users = new HashSet<>();
 
     public static class EventBuilder {
         Faker faker = new Faker(Locale.ITALY);
