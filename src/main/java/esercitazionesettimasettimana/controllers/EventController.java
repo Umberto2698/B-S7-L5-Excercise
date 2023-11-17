@@ -3,6 +3,7 @@ package esercitazionesettimasettimana.controllers;
 import esercitazionesettimasettimana.enteties.Event;
 import esercitazionesettimasettimana.enteties.User;
 import esercitazionesettimasettimana.exceptions.BadRequestException;
+import esercitazionesettimasettimana.payloads.events.BookEventDTO;
 import esercitazionesettimasettimana.payloads.events.EventDTO;
 import esercitazionesettimasettimana.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +70,11 @@ public class EventController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteEvent(@PathVariable UUID id, @PathVariable UUID organizerId) throws IOException {
         eventService.delete(id, organizerId);
+    }
+
+    @PatchMapping("/me/bookEvent")
+    public void bookEvent(@AuthenticationPrincipal User currentUser, @RequestBody BookEventDTO body) {
+        eventService.bookEvent(currentUser.getId(), body.id());
     }
 
     @PatchMapping("/{organizerId}/upload/{id}")

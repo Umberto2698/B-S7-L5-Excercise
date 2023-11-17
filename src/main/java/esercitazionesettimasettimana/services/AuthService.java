@@ -42,7 +42,7 @@ public class AuthService {
         userRepository.findByEmail(body.email()).ifPresent(a -> {
             throw new BadRequestException("The email" + a.getEmail() + " is alredy used.");
         });
-        User user = User.builder().name(body.name()).email(body.email()).surname(body.surname()).password(bcrypt.encode(body.password())).build();
+        User user = User.builder().name(body.name()).email(body.email()).surname(body.surname()).password(bcrypt.encode(body.password())).role(body.role()).build();
         return userRepository.save(user);
     }
 

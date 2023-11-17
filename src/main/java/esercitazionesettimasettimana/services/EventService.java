@@ -7,8 +7,10 @@ import esercitazionesettimasettimana.enteties.User;
 import esercitazionesettimasettimana.enums.Role;
 import esercitazionesettimasettimana.exceptions.ItemNotFoundException;
 import esercitazionesettimasettimana.exceptions.UnauthorizedException;
+import esercitazionesettimasettimana.payloads.events.BookEventSuccessDTO;
 import esercitazionesettimasettimana.payloads.events.EventDTO;
 import esercitazionesettimasettimana.repositories.EventRepository;
+import esercitazionesettimasettimana.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,15 +21,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
 public class EventService {
     @Autowired
     private EventRepository eventRepository;
+
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private Cloudinary cloudinary;
-
     @Autowired
     private UserService userService;
 
@@ -54,6 +59,14 @@ public class EventService {
 
     public Event getById(UUID id) {
         return eventRepository.findById(id).orElseThrow(() -> new ItemNotFoundException(id));
+    }
+
+    public BookEventSuccessDTO bookEvent(UUID eventId, UUID id) {
+        User user = userService.getById(id);
+        Event event = this.getById(eventId);
+        user.setEvents(Set.of(event));
+        userRepository.save(user);
+        return new BookEventSuccessDTO(user, event);
     }
 
     public void delete(UUID id, UUID organizerId) throws IOException {
