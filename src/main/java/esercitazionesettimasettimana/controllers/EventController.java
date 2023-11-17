@@ -25,7 +25,7 @@ public class EventController {
     private EventService eventService;
 
     @GetMapping("/all")
-    @PreAuthorize("hasAuthority('ADMIN','EVENT_ORGANIZER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','EVENT_ORGANIZER')")
     public Page<Event> getAllEvents(@RequestParam(defaultValue = "0") int page,
                                     @RequestParam(defaultValue = "10") int size,
                                     @RequestParam(defaultValue = "id") String orderBy) {
@@ -33,7 +33,7 @@ public class EventController {
     }
 
     @GetMapping("/me")
-    @PreAuthorize("hasAuthority('ADMIN','EVENT_ORGANIZER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','EVENT_ORGANIZER')")
     public Page<Event> getOrganizedEvents(@AuthenticationPrincipal User currentUser,
                                           @RequestParam(defaultValue = "0") int page,
                                           @RequestParam(defaultValue = "10") int size,
@@ -56,7 +56,7 @@ public class EventController {
 
     @PostMapping("/{organizerId}")
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAuthority('ADMIN','EVENT_ORGANIZER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','EVENT_ORGANIZER')")
     public Event save(@PathVariable UUID organizerId, @RequestBody EventDTO body, BindingResult validation) {
         if (validation.hasErrors()) {
             throw new BadRequestException(validation.getAllErrors());
@@ -66,7 +66,7 @@ public class EventController {
     }
 
     @DeleteMapping("/{id}/{organizerId}")
-    @PreAuthorize("hasAuthority('ADMIN','EVENT_ORGANIZER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','EVENT_ORGANIZER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteEvent(@PathVariable UUID id, @PathVariable UUID organizerId) throws IOException {
         eventService.delete(id, organizerId);
@@ -78,7 +78,7 @@ public class EventController {
     }
 
     @PatchMapping("/{organizerId}/upload/{id}")
-    @PreAuthorize("hasAuthority('ADMIN','EVENT_ORGANIZER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','EVENT_ORGANIZER')")
     public Event updateUserPicture(@RequestParam("picure_event") MultipartFile body, @PathVariable UUID id, @PathVariable UUID organizerId) throws Exception {
         return eventService.uploadImage(body, organizerId, id);
     }

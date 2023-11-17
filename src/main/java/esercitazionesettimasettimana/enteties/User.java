@@ -18,7 +18,7 @@ import java.util.*;
 @NoArgsConstructor
 @Builder(builderClassName = "UserBuilder")
 @Entity
-@JsonIgnoreProperties({"events", "createdAt", "password", "authorities", "enabled", "credentialsNonExpired", "accountNonExpired", "accountNonLocked"})
+@JsonIgnoreProperties({"events", "createdAt", "password", "organizedEvents", "authorities", "enabled", "credentialsNonExpired", "accountNonExpired", "accountNonLocked"})
 public class User implements UserDetails {
     @Id
     private UUID id;
@@ -29,7 +29,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @ManyToMany(mappedBy = "users", cascade = CascadeType.REMOVE)
+    @ManyToMany(mappedBy = "partecipants", cascade = CascadeType.REMOVE)
     private Set<Event> events = new HashSet<>();
 
     @OneToMany(mappedBy = "eventOrganizer", cascade = CascadeType.REMOVE)

@@ -32,7 +32,7 @@ public class Event {
 
     @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "Event_Participants", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "event_id")})
-    private Set<User> users = new HashSet<>();
+    private Set<User> partecipants = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "event_organizer_id", nullable = false)
