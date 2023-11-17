@@ -30,6 +30,10 @@ public class Event {
     @JoinTable(name = "Event_Participants", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "event_id")})
     private Set<User> users = new HashSet<>();
 
+    @ManyToOne
+    @JoinColumn(name = "event_organizer_id")
+    private User eventOrganizer;
+
     public static class EventBuilder {
         Faker faker = new Faker(Locale.ITALY);
         private String title = faker.book().title();

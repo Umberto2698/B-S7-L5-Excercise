@@ -32,6 +32,9 @@ public class User implements UserDetails {
     @ManyToMany(mappedBy = "users", cascade = CascadeType.REMOVE)
     private Set<Event> events = new HashSet<>();
 
+    @OneToMany(mappedBy = "eventOrganizer")
+    private Set<Event> organizedEvents = new HashSet<>();
+
     @CreationTimestamp
     @Column(name = "creation_date")
     private Date createdAt;
