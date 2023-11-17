@@ -2,7 +2,6 @@ package esercitazionesettimasettimana.services;
 
 import esercitazionesettimasettimana.enteties.User;
 import esercitazionesettimasettimana.exceptions.ItemNotFoundException;
-import esercitazionesettimasettimana.payloads.users.UserResponseDTO;
 import esercitazionesettimasettimana.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +22,7 @@ public class UserService {
         return userRepository.findAll(pageable);
     }
 
-    public UserResponseDTO findByEmail(String email) {
+    public User findByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new ItemNotFoundException(email));
     }

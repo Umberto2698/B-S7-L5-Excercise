@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.javafaker.Faker;
 import esercitazionesettimasettimana.enums.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.*;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(builderClassName = "UserBuilder")
@@ -70,12 +68,11 @@ public class User implements UserDetails {
 
     public static class UserBuilder {
         Faker faker = new Faker(Locale.ITALY);
+        private UUID id = UUID.randomUUID();
         private String name = faker.name().firstName();
         private String surname = faker.name().lastName();
         private String email = name + "." + surname + "@gmail.com";
         private String password = faker.phoneNumber().cellPhone();
         private Role role = Role.USER;
     }
-
-
 }
