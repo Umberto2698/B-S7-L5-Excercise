@@ -20,7 +20,7 @@ import java.util.*;
 @NoArgsConstructor
 @Builder(builderClassName = "UserBuilder")
 @Entity
-@JsonIgnoreProperties({"events", "createdAt", "events", "password", "authorities", "enabled", "credentialsNonExpired", "accountNonExpired", "accountNonLocked"})
+@JsonIgnoreProperties({"events", "createdAt", "password", "authorities", "enabled", "credentialsNonExpired", "accountNonExpired", "accountNonLocked"})
 public class User implements UserDetails {
     @Id
     private UUID id;

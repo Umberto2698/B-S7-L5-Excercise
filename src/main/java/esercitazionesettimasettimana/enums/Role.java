@@ -2,5 +2,6 @@ package esercitazionesettimasettimana.enums;
 
 public enum Role {
     USER,
-    EVENT_ORGANIZER
+    EVENT_ORGANIZER,
+    ADMIN
 }
