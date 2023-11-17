@@ -21,12 +21,21 @@ public class EventController {
     @Autowired
     private EventService eventService;
 
+    @GetMapping("/all")
+    @PreAuthorize("hasAuthority('ADMIN','EVENT_ORGANIZER')")
+    public Page<Event> getAllEvents(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "10") int size,
+                                    @RequestParam(defaultValue = "id") String orderBy) {
+        return eventService.getAllEvents(page, size, orderBy);
+    }
+
     @GetMapping("")
     public Page<Event> getEvents(@RequestParam(defaultValue = "0") int page,
                                  @RequestParam(defaultValue = "10") int size,
                                  @RequestParam(defaultValue = "id") String orderBy) {
         return eventService.getEvents(page, size, orderBy);
     }
+
 
     @GetMapping("/{id}")
     public Event getById(@PathVariable UUID id) {
