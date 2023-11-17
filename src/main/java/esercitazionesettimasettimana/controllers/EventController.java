@@ -79,7 +79,7 @@ public class EventController {
 
     @PatchMapping("/{organizerId}/upload/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN','EVENT_ORGANIZER')")
-    public Event updateUserPicture(@RequestParam("picure_event") MultipartFile body, @PathVariable UUID id, @PathVariable UUID organizerId) throws Exception {
+    public Event updateEventPicture(@RequestParam("picure_event") MultipartFile body, @PathVariable UUID id, @PathVariable UUID organizerId) throws Exception {
         return eventService.uploadImage(body, organizerId, id);
     }
 }
