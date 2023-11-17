@@ -1,6 +1,7 @@
 package esercitazionesettimasettimana.controllers;
 
 import esercitazionesettimasettimana.enteties.User;
+import esercitazionesettimasettimana.payloads.events.BookEventDTO;
 import esercitazionesettimasettimana.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -49,5 +50,10 @@ public class UserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProile(@AuthenticationPrincipal User currentUser) {
         userService.delete(currentUser.getId());
+    }
+
+    @PatchMapping("/me")
+    public void bookEvent(@AuthenticationPrincipal User currentUser, @RequestBody BookEventDTO body) {
+        userService.bookEvent(currentUser.getId(), body.id());
     }
 }

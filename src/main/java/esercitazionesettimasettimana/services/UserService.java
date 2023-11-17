@@ -1,7 +1,9 @@
 package esercitazionesettimasettimana.services;
 
+import esercitazionesettimasettimana.enteties.Event;
 import esercitazionesettimasettimana.enteties.User;
 import esercitazionesettimasettimana.exceptions.ItemNotFoundException;
+import esercitazionesettimasettimana.payloads.events.BookEventSuccessDTO;
 import esercitazionesettimasettimana.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,12 +12,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private EventService eventService;
 
     public Page<User> getUsers(int page, int size, String orderBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
@@ -34,5 +40,12 @@ public class UserService {
     public void delete(UUID id) {
         User found = this.getById(id);
         userRepository.delete(found);
+    }
+
+    public BookEventSuccessDTO bookEvent(UUID eventId, UUID id) {
+        User user = this.getById(id);
+        Event event = eventService.getById(eventId);
+        user.setEvents(Set.of(event));
+        return new BookEventSuccessDTO(user, event);
     }
 }
