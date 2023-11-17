@@ -3,7 +3,7 @@ package esercitazionesettimasettimana.controllers;
 import esercitazionesettimasettimana.enteties.User;
 import esercitazionesettimasettimana.exceptions.BadRequestException;
 import esercitazionesettimasettimana.payloads.users.*;
-import esercitazionesettimasettimana.services.AuthServices;
+import esercitazionesettimasettimana.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,7 +19,7 @@ import java.util.UUID;
 @RequestMapping("/auth")
 public class AuthController {
     @Autowired
-    private AuthServices authService;
+    private AuthService authService;
 
     @PostMapping("/login")
     public UserSuccessLoginDTO login(@RequestBody UserLoginDTO body) {

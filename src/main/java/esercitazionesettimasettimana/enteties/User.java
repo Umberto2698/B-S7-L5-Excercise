@@ -32,7 +32,7 @@ public class User implements UserDetails {
     @ManyToMany(mappedBy = "users", cascade = CascadeType.REMOVE)
     private Set<Event> events = new HashSet<>();
 
-    @OneToMany(mappedBy = "eventOrganizer")
+    @OneToMany(mappedBy = "eventOrganizer", cascade = CascadeType.REMOVE)
     private Set<Event> organizedEvents = new HashSet<>();
 
     @CreationTimestamp
